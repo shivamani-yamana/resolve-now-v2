@@ -9,8 +9,8 @@ import CTA from "@/components/home/CTA";
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="relative w-full flex items-center justify-center">
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-stone-950">
+      <div className="relative flex items-center justify-center w-full">
         <Navbar className="top-2" />
       </div>
 

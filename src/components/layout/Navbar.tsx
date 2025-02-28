@@ -21,51 +21,52 @@ export default function Navbar({ className }: NavbarProps) {
     >
       <div className="flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <span className="text-2xl font-bold text-transparent bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">
             ResolveNow
           </span>
         </Link>
 
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden space-x-8 md:flex">
           <Link
             href="#features"
-            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             Features
           </Link>
           <Link
             href="#how-it-works"
-            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             How it Works
           </Link>
 
           <Link
             href="#testimonials"
-            className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
           >
             Testimonials
           </Link>
+          <Link
+            href="/apply-grievance"
+            className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            Apply Grievance
+          </Link>
         </div>
 
-        <div className="hidden md:flex items-center space-x-4">
+        <div className="items-center hidden space-x-4 md:flex">
           <ThemeToggle />
+
           <Link
             href="/login"
-            className="px-4 py-2 rounded-full text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
-          >
-            Login
-          </Link>
-          <Link
-            href="/signup"
-            className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white hover:opacity-90 transition-opacity"
+            className="px-4 py-2 text-white transition-opacity rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90"
           >
             Get Started
           </Link>
         </div>
 
         {/* Mobile menu button */}
-        <div className="md:hidden flex items-center gap-2">
+        <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle />
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
             {mobileMenuOpen ? (
@@ -105,18 +106,18 @@ export default function Navbar({ className }: NavbarProps) {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-4 py-4 bg-white dark:bg-gray-900 rounded-2xl shadow-lg">
-          <div className="flex flex-col space-y-4 px-6">
+        <div className="py-4 mt-4 bg-white shadow-lg md:hidden dark:bg-gray-900 rounded-2xl">
+          <div className="flex flex-col px-6 space-y-4">
             <Link
               href="#features"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               Features
             </Link>
             <Link
               href="#how-it-works"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               How it Works
@@ -124,21 +125,28 @@ export default function Navbar({ className }: NavbarProps) {
 
             <Link
               href="#testimonials"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
               onClick={() => setMobileMenuOpen(false)}
             >
               Testimonials
             </Link>
-            <div className="flex flex-col space-y-2 pt-4 border-t dark:border-gray-700">
+            <Link
+              href="/apply-grievance"
+              className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Apply Grievance
+            </Link>
+            <div className="flex flex-col pt-4 space-y-2 border-t dark:border-gray-700">
               <Link
                 href="/login"
-                className="px-4 py-2 rounded-full text-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+                className="px-4 py-2 text-center text-blue-600 transition-colors rounded-full dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-center text-white hover:opacity-90 transition-opacity"
+                className="px-4 py-2 text-center text-white transition-opacity rounded-full bg-gradient-to-r from-blue-600 to-purple-600 hover:opacity-90"
               >
                 Get Started
               </Link>

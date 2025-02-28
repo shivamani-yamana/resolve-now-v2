@@ -1,4 +1,6 @@
-import Button from "@/components/ui/Button";
+"use client";
+import { Button } from "../ui/Button";
+import Link from "next/link";
 
 export default function CTA() {
   return (
@@ -17,9 +19,8 @@ export default function CTA() {
               <Button
                 className="bg-white text-blue-700 hover:bg-blue-50"
                 size="lg"
-                href="/signup"
               >
-                Start Now
+                <Link href="/login">Start Now</Link>
               </Button>
             </div>
           </div>

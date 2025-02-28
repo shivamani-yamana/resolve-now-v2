@@ -1,4 +1,5 @@
-import Button from "@/components/ui/Button";
+import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -16,23 +17,28 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               {/* Github Link here */}
-              <Button size="lg" href="/signup">
-                Github Link
+              <Button size="lg">
+                <Link href="https://github.com/shivamani-yamana/resolve-now-v2">
+                  Github Link
+                </Link>
               </Button>
-              <Button size="lg" variant="outline" href="#demo">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 mr-2"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                Watch Demo
+              <Button size="lg" variant="outline">
+                {/* Add demo video link here */}
+                <Link href="#demo">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Watch Demo
+                </Link>
               </Button>
             </div>
             <div className="mt-10 flex items-center">

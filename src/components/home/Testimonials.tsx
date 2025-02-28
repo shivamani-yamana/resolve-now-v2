@@ -7,7 +7,7 @@ interface TestimonialProps {
 
 function TestimonialCard({ content, name, role, company }: TestimonialProps) {
   return (
-    <div className="bg-white p-8 rounded-2xl shadow-md">
+    <div className="p-8 bg-white shadow-md dark:bg-stone-900 rounded-2xl">
       <div className="flex mb-6">
         {[1, 2, 3, 4, 5].map((star) => (
           <svg
@@ -20,12 +20,14 @@ function TestimonialCard({ content, name, role, company }: TestimonialProps) {
           </svg>
         ))}
       </div>
-      <p className="text-gray-700 mb-6">{content}</p>
+      <p className="mb-6 text-gray-700 dark:text-gray-300">{content}</p>
       <div className="flex items-center">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-400 flex-shrink-0"></div>
+        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-400"></div>
         <div className="ml-3">
-          <div className="font-medium">{name}</div>
-          <div className="text-sm text-gray-500">
+          <div className="font-medium text-gray-900 dark:text-white">
+            {name}
+          </div>
+          <div className="text-sm text-gray-500 dark:text-gray-400">
             {role}, {company}
           </div>
         </div>
@@ -60,29 +62,29 @@ export default function Testimonials() {
   ];
 
   return (
-    <section id="testimonials" className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+    <section id="testimonials" className="py-20 bg-gray-50 dark:bg-stone-950">
+      <div className="container px-4 mx-auto">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
             What Our Customers Say
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300">
             Organizations across industries have transformed their grievance
             management with ResolveNow.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />
           ))}
         </div>
 
-        <div className="mt-16 flex flex-wrap justify-center items-center gap-8 md:gap-16">
+        <div className="flex flex-wrap items-center justify-center gap-8 mt-16 md:gap-16">
           {[1, 2, 3, 4, 5, 6].map((logo) => (
             <div
               key={logo}
-              className="h-10 w-32 bg-gray-200 rounded opacity-60"
+              className="w-32 h-10 bg-gray-200 rounded dark:bg-stone-800 opacity-60"
             ></div>
           ))}
         </div>

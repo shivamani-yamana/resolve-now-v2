@@ -27,13 +27,13 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section id="how-it-works" className="py-20">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+    <section id="how-it-works" className="py-20 bg-gray-50 dark:bg-stone-950">
+      <div className="container px-4 mx-auto">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-3xl font-bold text-gray-900 md:text-4xl dark:text-white">
             How ResolveNow Works
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300">
             Our streamlined process ensures every complaint is handled
             efficiently from submission to resolution.
           </p>
@@ -41,9 +41,9 @@ export default function HowItWorks() {
 
         <div className="relative">
           {/* Connection line */}
-          <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-500 to-purple-500 transform -translate-x-1/2 hidden md:block"></div>
+          <div className="absolute top-0 bottom-0 hidden w-1 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-blue-500 to-purple-500 md:block"></div>
 
-          <div className="space-y-16 md:space-y-32 relative">
+          <div className="relative space-y-16 md:space-y-32">
             {steps.map((step, index) => (
               <div
                 key={index}
@@ -51,25 +51,27 @@ export default function HowItWorks() {
                   index % 2 === 1 ? "md:flex-row-reverse" : ""
                 }`}
               >
-                <div className="md:w-1/2 mb-8 md:mb-0">
+                <div className="mb-8 md:w-1/2 md:mb-0">
                   <div
                     className={`text-center md:text-${
                       index % 2 === 1 ? "left" : "right"
                     } md:px-10`}
                   >
-                    <div className="inline-block text-5xl md:text-6xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                    <div className="inline-block mb-4 text-5xl font-bold text-transparent md:text-6xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text">
                       {step.number}
                     </div>
-                    <h3 className="text-2xl font-semibold mb-2">
+                    <h3 className="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
                       {step.title}
                     </h3>
-                    <p className="text-gray-600">{step.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      {step.description}
+                    </p>
                   </div>
                 </div>
 
                 <div className="relative md:w-0">
-                  <div className="w-12 h-12 rounded-full bg-white border-4 border-purple-500 z-10 relative flex items-center justify-center">
-                    <div className="w-4 h-4 rounded-full bg-blue-600"></div>
+                  <div className="relative z-10 flex items-center justify-center w-12 h-12 bg-white border-4 border-purple-500 rounded-full dark:bg-stone-800">
+                    <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
                   </div>
                 </div>
 

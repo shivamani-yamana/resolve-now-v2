@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Card,
   CardContent,
@@ -69,6 +70,7 @@ type Grievance = {
 };
 
 export default function GrievancesPage() {
+  const { role, department, assignedCategories } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
@@ -137,6 +139,14 @@ export default function GrievancesPage() {
     },
   ];
 
+  // Filter grievances based on user role and department
+  const filteredByRoleGrievances =
+    role === "admin"
+      ? grievances // Admins see all grievances
+      : grievances.filter(
+          (grievance) => assignedCategories.includes(grievance.category) // Support staff only see their department's grievances
+        );
+
   // Extract unique categories and priorities for filter options
   const categories = ["all", ...new Set(grievances.map((g) => g.category))];
   const priorities = ["all", ...new Set(grievances.map((g) => g.priority))];
@@ -171,7 +181,7 @@ export default function GrievancesPage() {
     setActiveFilters({});
   };
 
-  const filteredGrievances = grievances.filter((grievance) => {
+  const filteredGrievances = filteredByRoleGrievances.filter((grievance) => {
     // Filter by status
     if (statusFilter !== "all" && grievance.status !== statusFilter) {
       return false;
@@ -272,9 +282,13 @@ export default function GrievancesPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Grievances</h1>
+          <h1 className="text-3xl font-bold">
+            {role === "admin" ? "All Grievances" : "My Department Grievances"}
+          </h1>
           <p className="text-muted-foreground">
-            Manage and track all grievances in the system
+            {role === "admin"
+              ? "Manage and track all grievances in the system"
+              : `Manage grievances in the ${department} department`}
           </p>
         </div>
         <Button onClick={() => setIsDialogOpen(true)}>

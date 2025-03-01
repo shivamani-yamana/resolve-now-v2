@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import {
   Card,
   CardContent,
@@ -31,7 +32,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { toast } from "sonner";
 
 type Team = {
   id: string;
@@ -43,6 +51,7 @@ type Team = {
 };
 
 export default function TeamsPage() {
+  const { usersList } = useAuth();
   const [teams, setTeams] = useState<Team[]>([
     {
       id: "team-1",
@@ -78,6 +87,23 @@ export default function TeamsPage() {
     },
   ]);
 
+  // Count support staff by department
+  const teamMemberCounts = usersList.reduce(
+    (acc: { [key: string]: number }, user) => {
+      if (user.role === "support" && user.department) {
+        acc[user.department] = (acc[user.department] || 0) + 1;
+      }
+      return acc;
+    },
+    {}
+  );
+
+  // Update team member counts
+  const updatedTeams = teams.map((team) => ({
+    ...team,
+    members: teamMemberCounts[team.category] || team.members,
+  }));
+
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [newTeam, setNewTeam] = useState({
     name: "",
@@ -94,10 +120,14 @@ export default function TeamsPage() {
       lead: newTeam.lead,
       status: "Active",
     };
-    
+
     setTeams([...teams, team]);
     setIsCreateDialogOpen(false);
     setNewTeam({ name: "", category: "", lead: "" });
+
+    toast.success(
+      `Team ${newTeam.name} created successfully. You can now assign staff to this team.`
+    );
   };
 
   return (
@@ -135,7 +165,7 @@ export default function TeamsPage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {teams.map((team) => (
+              {updatedTeams.map((team) => (
                 <TableRow key={team.id}>
                   <TableCell className="font-medium">{team.name}</TableCell>
                   <TableCell>{team.category}</TableCell>
@@ -183,23 +213,27 @@ export default function TeamsPage() {
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="name" className="text-right">
                 Team Name
               </Label>
               <Input
                 id="name"
                 value={newTeam.name}
-                onChange={(e) => setNewTeam({ ...newTeam, name: e.target.value })}
+                onChange={(e) =>
+                  setNewTeam({ ...newTeam, name: e.target.value })
+                }
                 className="col-span-3"
               />
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="category" className="text-right">
                 Category
               </Label>
-              <Select 
-                onValueChange={(value) => setNewTeam({ ...newTeam, category: value })}
+              <Select
+                onValueChange={(value) =>
+                  setNewTeam({ ...newTeam, category: value })
+                }
                 value={newTeam.category}
               >
                 <SelectTrigger className="col-span-3">
@@ -214,20 +248,25 @@ export default function TeamsPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="grid grid-cols-4 items-center gap-4">
+            <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="lead" className="text-right">
                 Team Lead
               </Label>
               <Input
                 id="lead"
                 value={newTeam.lead}
-                onChange={(e) => setNewTeam({ ...newTeam, lead: e.target.value })}
+                onChange={(e) =>
+                  setNewTeam({ ...newTeam, lead: e.target.value })
+                }
                 className="col-span-3"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setIsCreateDialogOpen(false)}
+            >
               Cancel
             </Button>
             <Button onClick={handleCreateTeam}>Create Team</Button>

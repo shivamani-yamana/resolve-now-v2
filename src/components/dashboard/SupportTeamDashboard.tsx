@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Clock,
@@ -14,7 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import KanbanBoard from "@/components/grievance/KanbanBoard";
-import { Button } from "../ui/Button";
+import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/badge";
 import {
   Select,
@@ -33,6 +34,8 @@ export default function SupportTeamDashboard() {
   const [activeFilters, setActiveFilters] = useState<{ [key: string]: string }>(
     {}
   );
+
+  const { user } = useAuth();
 
   const stats = [
     {
@@ -73,6 +76,7 @@ export default function SupportTeamDashboard() {
       submittedAt: "2024-05-14",
       priority: "High",
       status: "New",
+      category: "IT",
     },
     {
       id: "GR-2024-043",
@@ -81,6 +85,7 @@ export default function SupportTeamDashboard() {
       submittedAt: "2024-05-13",
       priority: "Medium",
       status: "In Progress",
+      category: "IT",
     },
     {
       id: "GR-2024-040",
@@ -89,6 +94,7 @@ export default function SupportTeamDashboard() {
       submittedAt: "2024-05-12",
       priority: "Low",
       status: "In Progress",
+      category: "Security",
     },
     {
       id: "GR-2024-039",
@@ -97,6 +103,7 @@ export default function SupportTeamDashboard() {
       submittedAt: "2024-05-11",
       priority: "Medium",
       status: "Under Review",
+      category: "Administration",
     },
     {
       id: "GR-2024-035",
@@ -105,6 +112,7 @@ export default function SupportTeamDashboard() {
       submittedAt: "2024-05-09",
       priority: "Low",
       status: "Resolved",
+      category: "Library",
     },
   ];
 
@@ -165,6 +173,13 @@ export default function SupportTeamDashboard() {
 
   return (
     <>
+      <div className="mb-6">
+        <p className="text-muted-foreground">
+          Welcome back,{" "}
+          <span className="font-medium text-primary">{user?.name}</span>
+        </p>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;

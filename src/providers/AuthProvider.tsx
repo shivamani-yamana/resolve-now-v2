@@ -1,26 +1,21 @@
 "use client";
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import React, { createContext, useContext, ReactNode } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { User, UserCreationData, UserResponse } from "@/types/auth";
 
 interface AuthContextType {
-  user: any;
-  role: string | null;
+  user: User | null;
+  role: "admin" | "support" | null;
   department: string | null;
   assignedCategories: string[];
   loading: boolean;
   login: (email: string, password: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
-  usersList: any[];
-  createUser: (userData: any) => any;
-  updateUser: (id: string, userData: any) => void;
+  usersList: User[];
+  createUser: (userData: UserCreationData) => UserResponse;
+  updateUser: (id: string, userData: Partial<User>) => void;
   deleteUser: (id: string) => void;
 }
 

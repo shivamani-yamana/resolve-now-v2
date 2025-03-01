@@ -41,9 +41,22 @@ import {
   Clock,
   CheckCircle,
   PauseCircle,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 type Grievance = {
   id: string;
@@ -58,7 +71,19 @@ type Grievance = {
 
 export default function GrievancesPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
+  const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [priorityFilter, setPriorityFilter] = useState<string>("all");
+  const [activeFilters, setActiveFilters] = useState<{ [key: string]: string }>(
+    {}
+  );
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newGrievance, setNewGrievance] = useState({
+    title: "",
+    description: "",
+    category: "IT",
+    priority: "Medium",
+  });
 
   const grievances: Grievance[] = [
     {
@@ -113,10 +138,57 @@ export default function GrievancesPage() {
     },
   ];
 
+  // Extract unique categories and priorities for filter options
+  const categories = ["all", ...new Set(grievances.map((g) => g.category))];
+  const priorities = ["all", ...new Set(grievances.map((g) => g.priority))];
+  const statuses = ["all", "New", "In Progress", "Under Review", "Resolved"];
+
+  const applyFilter = (type: string, value: string) => {
+    switch (type) {
+      case "status":
+        setStatusFilter(value);
+        break;
+      case "category":
+        setCategoryFilter(value);
+        break;
+      case "priority":
+        setPriorityFilter(value);
+        break;
+    }
+
+    if (value === "all") {
+      const newFilters = { ...activeFilters };
+      delete newFilters[type];
+      setActiveFilters(newFilters);
+    } else {
+      setActiveFilters({ ...activeFilters, [type]: value });
+    }
+  };
+
+  const clearAllFilters = () => {
+    setStatusFilter("all");
+    setCategoryFilter("all");
+    setPriorityFilter("all");
+    setActiveFilters({});
+  };
+
   const filteredGrievances = grievances.filter((grievance) => {
+    // Filter by status
     if (statusFilter !== "all" && grievance.status !== statusFilter) {
       return false;
     }
+
+    // Filter by category
+    if (categoryFilter !== "all" && grievance.category !== categoryFilter) {
+      return false;
+    }
+
+    // Filter by priority
+    if (priorityFilter !== "all" && grievance.priority !== priorityFilter) {
+      return false;
+    }
+
+    // Filter by search query
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       return (
@@ -159,6 +231,43 @@ export default function GrievancesPage() {
     }
   };
 
+  const handleSubmitGrievance = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically make an API call to submit the grievance
+    console.log("Submitting grievance:", newGrievance);
+
+    // Generate a new random ID and create the grievance object
+    const now = new Date();
+    const newId = `GR-${now.getFullYear()}-${String(
+      Math.floor(Math.random() * 1000)
+    ).padStart(3, "0")}`;
+
+    const submittedGrievance = {
+      id: newId,
+      title: newGrievance.title,
+      category: newGrievance.category,
+      priority: newGrievance.priority as "Low" | "Medium" | "High",
+      status: "New",
+      submittedBy: "Current User", // In a real app, this would come from auth context
+      assignedTo: "Pending Assignment",
+      date: now.toISOString().split("T")[0],
+    };
+
+    // In a real app, you would add this to your state after API confirmation
+    // For this demo, we'll show a success message
+
+    toast.success("Grievance submitted successfully");
+
+    // Reset form and close dialog
+    setNewGrievance({
+      title: "",
+      description: "",
+      category: "IT",
+      priority: "Medium",
+    });
+    setIsDialogOpen(false);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -168,11 +277,116 @@ export default function GrievancesPage() {
             Manage and track all grievances in the system
           </p>
         </div>
-        <Button>
+        <Button onClick={() => setIsDialogOpen(true)}>
           <MessageCircle className="w-4 h-4 mr-2" />
           Report New Grievance
         </Button>
       </div>
+
+      {/* New Grievance Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <form onSubmit={handleSubmitGrievance}>
+            <DialogHeader>
+              <DialogTitle>Report a New Grievance</DialogTitle>
+              <DialogDescription>
+                Fill out the form below to submit a new grievance. You will be
+                notified when there is an update.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="title" className="text-right">
+                  Title
+                </Label>
+                <Input
+                  id="title"
+                  value={newGrievance.title}
+                  onChange={(e) =>
+                    setNewGrievance({ ...newGrievance, title: e.target.value })
+                  }
+                  className="col-span-3"
+                  placeholder="Brief title of your grievance"
+                  required
+                />
+              </div>
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="category" className="text-right">
+                  Category
+                </Label>
+                <Select
+                  value={newGrievance.category}
+                  onValueChange={(value) =>
+                    setNewGrievance({ ...newGrievance, category: value })
+                  }
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Select category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="IT">IT</SelectItem>
+                    <SelectItem value="Administration">
+                      Administration
+                    </SelectItem>
+                    <SelectItem value="Security">Security</SelectItem>
+                    <SelectItem value="Facilities">Facilities</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="priority" className="text-right">
+                  Priority
+                </Label>
+                <Select
+                  value={newGrievance.priority}
+                  onValueChange={(value) =>
+                    setNewGrievance({ ...newGrievance, priority: value })
+                  }
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Low">Low</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="High">High</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid items-start grid-cols-4 gap-4">
+                <Label htmlFor="description" className="pt-2 text-right">
+                  Description
+                </Label>
+                <Textarea
+                  id="description"
+                  value={newGrievance.description}
+                  onChange={(e) =>
+                    setNewGrievance({
+                      ...newGrievance,
+                      description: e.target.value,
+                    })
+                  }
+                  className="col-span-3"
+                  placeholder="Detailed description of your grievance"
+                  rows={5}
+                  required
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button type="submit">Submit Grievance</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
 
       <Card>
         <CardHeader>
@@ -195,23 +409,87 @@ export default function GrievancesPage() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Filter by status" />
+              <Select
+                value={statusFilter}
+                onValueChange={(value) => applyFilter("status", value)}
+              >
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="New">New</SelectItem>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
-                  <SelectItem value="Under Review">Under Review</SelectItem>
-                  <SelectItem value="Resolved">Resolved</SelectItem>
+                  {statuses.map((status) => (
+                    <SelectItem key={status} value={status}>
+                      {status === "all" ? "All Statuses" : status}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
-              <Button variant="outline" size="icon">
-                <Filter className="w-4 h-4" />
-              </Button>
+
+              <Select
+                value={categoryFilter}
+                onValueChange={(value) => applyFilter("category", value)}
+              >
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category === "all" ? "All Categories" : category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={priorityFilter}
+                onValueChange={(value) => applyFilter("priority", value)}
+              >
+                <SelectTrigger className="w-[150px]">
+                  <SelectValue placeholder="Priority" />
+                </SelectTrigger>
+                <SelectContent>
+                  {priorities.map((priority) => (
+                    <SelectItem key={priority} value={priority}>
+                      {priority === "all" ? "All Priorities" : priority}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
+
+          {/* Active filters display */}
+          {Object.keys(activeFilters).length > 0 && (
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="text-sm text-muted-foreground">
+                Active filters:
+              </span>
+              {Object.entries(activeFilters).map(([type, value]) => (
+                <Badge
+                  key={type}
+                  variant="secondary"
+                  className="flex items-center gap-1"
+                >
+                  {type}: {value}
+                  <X
+                    className="w-3 h-3 cursor-pointer"
+                    onClick={() => applyFilter(type, "all")}
+                  />
+                </Badge>
+              ))}
+              {Object.keys(activeFilters).length > 1 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={clearAllFilters}
+                  className="px-2 text-xs h-7"
+                >
+                  Clear all
+                </Button>
+              )}
+            </div>
+          )}
 
           <div className="border rounded-md">
             <Table>

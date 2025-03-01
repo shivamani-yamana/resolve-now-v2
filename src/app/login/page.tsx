@@ -59,13 +59,13 @@ export default function LoginPage() {
 
     if (!username || !password) {
       toast.warning(
-        "Invalid credentials : Please enter both username and password to continue."
+        "Invalid credentials: Please enter both username and password to continue."
       );
       return;
     }
 
     if (!role) {
-      toast.warning("Please select a role (Admin or Support Team).");
+      toast.warning("Please select a role (Administrator or Support Staff).");
       return;
     }
 
@@ -169,8 +169,8 @@ export default function LoginPage() {
                     <SelectValue placeholder="Select your role" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="support">Support Team</SelectItem>
+                    <SelectItem value="admin">Administrator</SelectItem>
+                    <SelectItem value="support">Support Staff</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

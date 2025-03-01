@@ -1,67 +1,99 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { FileText, CheckCircle, BarChart3, Users, Plus } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { Button } from "../ui/Button";
+import { Users, FileText, BarChart3, AlertCircle } from "lucide-react";
 
 export default function AdminDashboard() {
+  // Stats data
   const stats = [
     {
-      title: "Total Grievances",
-      value: "156",
-      icon: FileText,
-      color: "text-blue-500",
-      description: "All submitted complaints",
-    },
-    {
-      title: "Active Teams",
-      value: "8",
+      title: "Total Users",
+      value: "120",
       icon: Users,
-      color: "text-purple-500",
-      description: "Support teams handling cases",
+      color: "text-blue-500",
+      description: "+5% from last month",
     },
     {
-      title: "Resolved",
-      value: "124",
-      icon: CheckCircle,
-      color: "text-green-500",
-      description: "Successfully addressed",
+      title: "Open Grievances",
+      value: "24",
+      icon: FileText,
+      color: "text-yellow-500",
+      description: "-2% from last week",
     },
     {
       title: "Resolution Rate",
-      value: "79%",
+      value: "89%",
       icon: BarChart3,
-      color: "text-amber-500",
-      description: "Average resolution time: 3.5 days",
+      color: "text-green-500",
+      description: "+2% from last month",
+    },
+    {
+      title: "Urgent Issues",
+      value: "7",
+      icon: AlertCircle,
+      color: "text-red-500",
+      description: "Needs attention",
     },
   ];
 
+  // Recent grievances data
+  const recentGrievances = [
+    {
+      id: "GR-2024-045",
+      title: "Wi-Fi Connectivity Issue in Library",
+      submittedBy: "John Doe",
+      submittedAt: "2024-05-14",
+      priority: "High",
+      status: "New",
+      category: "IT",
+    },
+    {
+      id: "GR-2024-043",
+      title: "Classroom Projector Malfunction",
+      submittedBy: "Jane Smith",
+      submittedAt: "2024-05-13",
+      priority: "Medium",
+      status: "In Progress",
+      category: "IT",
+    },
+    {
+      id: "GR-2024-040",
+      title: "Access Card Not Working",
+      submittedBy: "Mike Johnson",
+      submittedAt: "2024-05-12",
+      priority: "Low",
+      status: "In Progress",
+      category: "Security",
+    },
+  ];
+
+  // Team performance data
   const teamPerformance = [
     {
       id: "team-1",
-      name: "Technical Support",
-      assignedCases: 32,
-      resolvedCases: 27,
-      averageResolutionTime: "2.1 days",
-      satisfaction: "4.2/5",
+      name: "IT Support Team",
+      assignedCases: 45,
+      resolvedCases: 38,
+      averageResolutionTime: "1.8 days",
+      satisfaction: "4.7/5",
     },
     {
       id: "team-2",
-      name: "Academic Affairs",
-      assignedCases: 45,
-      resolvedCases: 38,
-      averageResolutionTime: "3.7 days",
-      satisfaction: "3.8/5",
+      name: "Facilities Management",
+      assignedCases: 32,
+      resolvedCases: 27,
+      averageResolutionTime: "2.3 days",
+      satisfaction: "4.2/5",
     },
     {
       id: "team-3",
-      name: "Facilities Management",
-      assignedCases: 28,
-      resolvedCases: 22,
-      averageResolutionTime: "4.2 days",
-      satisfaction: "3.5/5",
+      name: "Administrative Support",
+      assignedCases: 18,
+      resolvedCases: 15,
+      averageResolutionTime: "1.5 days",
+      satisfaction: "4.5/5",
     },
   ];
 
@@ -92,53 +124,140 @@ export default function AdminDashboard() {
         })}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Recent Grievances</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {recentGrievances.map((grievance) => (
+              <div
+                key={grievance.id}
+                className="pb-4 border-b last:border-0 last:pb-0"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <div className="font-medium">{grievance.title}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {grievance.id}
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">By: </span>
+                    {grievance.submittedBy}
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Date: </span>
+                    {grievance.submittedAt}
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Priority: </span>
+                    <span
+                      className={`${
+                        grievance.priority === "High"
+                          ? "text-red-500"
+                          : grievance.priority === "Medium"
+                          ? "text-yellow-500"
+                          : "text-blue-500"
+                      }`}
+                    >
+                      {grievance.priority}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Status: </span>
+                    {grievance.status}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="mt-6">
+        <CardHeader>
+          <CardTitle>Team Performance</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {teamPerformance.map((team) => (
+              <div
+                key={team.id}
+                className="pb-4 border-b last:border-0 last:pb-0"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className="font-medium">{team.name}</div>
+                  <Link href={`/dashboard/teams/${team.id}`}>
+                    <Button variant="ghost" size="sm">
+                      Details
+                    </Button>
+                  </Link>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div>
+                    <span className="text-muted-foreground">Assigned: </span>
+                    {team.assignedCases}
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Resolved: </span>
+                    {team.resolvedCases}
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Avg Time: </span>
+                    {team.averageResolutionTime}
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground">Rating: </span>
+                    {team.satisfaction}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+      {/* 
+      <div className="grid gap-6 mt-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <CardTitle>Team Performance</CardTitle>
-              <Link href="/dashboard/teams">
+              <CardTitle>User Management</CardTitle>
+              <Link href="/dashboard/users">
                 <Button variant="outline" size="sm">
-                  View All Teams
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Manage Users
                 </Button>
               </Link>
             </div>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {teamPerformance.map((team) => (
-                <div
-                  key={team.id}
-                  className="pb-4 border-b last:border-0 last:pb-0"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-medium">{team.name}</div>
-                    <Link href={`/dashboard/teams/${team.id}`}>
-                      <Button variant="ghost" size="sm">
-                        Details
-                      </Button>
-                    </Link>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">8</div>
+                    <p className="text-xs text-muted-foreground">Admin Users</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div>
-                      <span className="text-muted-foreground">Assigned: </span>
-                      {team.assignedCases}
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Resolved: </span>
-                      {team.resolvedCases}
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Avg Time: </span>
-                      {team.averageResolutionTime}
-                    </div>
-                    <div>
-                      <span className="text-muted-foreground">Rating: </span>
-                      {team.satisfaction}
-                    </div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="pt-6">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold">24</div>
+                    <p className="text-xs text-muted-foreground">
+                      Support Staff
+                    </p>
                   </div>
-                </div>
-              ))}
+                </CardContent>
+              </Card>
+            </div>
+            <div className="space-y-2">
+              <Link href="/dashboard/users/create">
+                <Button size="sm" className="w-full">
+                  <Plus className="w-4 h-4 mr-1" /> Add New User
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>
@@ -172,9 +291,9 @@ export default function AdminDashboard() {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
-      <Card>
+      <Card className="mt-6">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>Monthly Grievance Trends</CardTitle>

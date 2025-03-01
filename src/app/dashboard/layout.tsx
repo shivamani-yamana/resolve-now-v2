@@ -9,7 +9,6 @@ import {
   Home,
   FileText,
   Search,
-  HelpCircle,
   LogOut,
   Menu,
   Settings,
@@ -18,6 +17,9 @@ import {
   BarChart3,
   Layers,
   X,
+  UserPlus,
+  User,
+  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -53,9 +55,9 @@ export default function DashboardLayout({
     { name: "All Grievances", href: "/dashboard/grievances", icon: FileText },
     { name: "Teams", href: "/dashboard/teams", icon: Users },
     { name: "Categories", href: "/dashboard/categories", icon: Layers },
+    { name: "Users", href: "/dashboard/users", icon: UserPlus },
     { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
-    { name: "Help & Support", href: "/dashboard/help", icon: HelpCircle },
   ];
 
   const supportNavigation = [
@@ -63,7 +65,7 @@ export default function DashboardLayout({
     { name: "My Grievances", href: "/dashboard/grievances", icon: FileText },
     { name: "Track Updates", href: "/dashboard/track", icon: Search },
     { name: "Feedback", href: "/dashboard/feedback", icon: MessageSquare },
-    { name: "Settings", href: "/dashboard/settings", icon: Settings },
+    { name: "Profile", href: "/dashboard/profile", icon: User },
     { name: "Help", href: "/dashboard/help", icon: HelpCircle },
   ];
 

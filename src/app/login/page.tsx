@@ -26,17 +26,18 @@ import { toast } from "sonner";
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState(""); // Added for sign up
   const [role, setRole] = useState("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!email || !password) {
       toast.warning(
-        "Invalid credentials : Please enter both username and password to continue."
+        "Invalid credentials: Please enter both email and password to continue."
       );
 
       return;
@@ -57,9 +58,9 @@ export default function LoginPage() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !password) {
+    if (!email || !password || !name) {
       toast.warning(
-        "Invalid credentials: Please enter both username and password to continue."
+        "Invalid information: Please fill in all required fields to continue."
       );
       return;
     }
@@ -100,13 +101,14 @@ export default function LoginPage() {
           <CardContent className="space-y-4">
             <form onSubmit={handleLogin} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="email">Email</Label>
                 <Input
-                  id="username"
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   required
+                  placeholder="your.email@example.com"
                 />
               </div>
               <div className="space-y-2">
@@ -143,13 +145,25 @@ export default function LoginPage() {
           <CardContent className="space-y-4">
             <form onSubmit={handleSignup} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="signup-username">Username</Label>
+                <Label htmlFor="signup-name">Full Name</Label>
                 <Input
-                  id="signup-username"
+                  id="signup-name"
                   type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   required
+                  placeholder="John Smith"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="signup-email">Email</Label>
+                <Input
+                  id="signup-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  placeholder="your.email@example.com"
                 />
               </div>
               <div className="space-y-2">
@@ -160,6 +174,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  placeholder="Create a strong password"
                 />
               </div>
               <div className="space-y-2">

@@ -8,7 +8,6 @@ import { useAuth } from "@/hooks/useAuth";
 import {
   Home,
   FileText,
-  Search,
   LogOut,
   Menu,
   Settings,
@@ -18,8 +17,6 @@ import {
   Layers,
   X,
   UserPlus,
-  User,
-  HelpCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -52,21 +49,20 @@ export default function DashboardLayout({
 
   const adminNavigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
+    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
     { name: "All Grievances", href: "/dashboard/grievances", icon: FileText },
     { name: "Teams", href: "/dashboard/teams", icon: Users },
     { name: "Categories", href: "/dashboard/categories", icon: Layers },
     { name: "Users", href: "/dashboard/users", icon: UserPlus },
-    { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
     { name: "Settings", href: "/dashboard/settings", icon: Settings },
   ];
 
   const supportNavigation = [
     { name: "Dashboard", href: "/dashboard", icon: Home },
-    { name: "My Grievances", href: "/dashboard/grievances", icon: FileText },
-    { name: "Track Updates", href: "/dashboard/track", icon: Search },
-    { name: "Feedback", href: "/dashboard/feedback", icon: MessageSquare },
-    { name: "Profile", href: "/dashboard/profile", icon: User },
-    { name: "Help", href: "/dashboard/help", icon: HelpCircle },
+    { name: "Track Grievances", href: "/dashboard/grievances", icon: FileText },
+    { name: "Feedbacks", href: "/dashboard/feedback", icon: MessageSquare },
+    // { name: "Profile", href: "/dashboard/profile", icon: User },
+    // { name: "Help", href: "/dashboard/help", icon: HelpCircle },
   ];
 
   const navigation = role === "admin" ? adminNavigation : supportNavigation;
@@ -118,7 +114,7 @@ export default function DashboardLayout({
 
           <div className="flex items-center px-2 mb-10">
             <span className="text-xl font-semibold sm:text-2xl">
-              Resolve Now
+              <Link href="/">Resolve Now</Link>
             </span>
           </div>
 

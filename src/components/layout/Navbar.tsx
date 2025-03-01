@@ -52,6 +52,18 @@ export default function Navbar({ className }: NavbarProps) {
           >
             Apply Grievance
           </Link>
+          <Link
+            href="/track-grievance"
+            className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            Track Grievance
+          </Link>
+          <Link
+            href="#faq"
+            className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+          >
+            Help & Support
+          </Link>
         </div>
 
         <div className="items-center hidden space-x-4 md:flex">
@@ -136,6 +148,13 @@ export default function Navbar({ className }: NavbarProps) {
               onClick={() => setMobileMenuOpen(false)}
             >
               Apply Grievance
+            </Link>
+            <Link
+              href="/track-grievance"
+              className="text-gray-700 transition-colors dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Track Grievance
             </Link>
             <div className="flex flex-col pt-4 space-y-2 border-t dark:border-gray-700">
               <Link

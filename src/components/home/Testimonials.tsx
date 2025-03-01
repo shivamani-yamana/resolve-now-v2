@@ -79,15 +79,6 @@ export default function Testimonials() {
             <TestimonialCard key={index} {...testimonial} />
           ))}
         </div>
-
-        <div className="flex flex-wrap items-center justify-center gap-8 mt-16 md:gap-16">
-          {[1, 2, 3, 4, 5, 6].map((logo) => (
-            <div
-              key={logo}
-              className="w-32 h-10 bg-gray-200 rounded dark:bg-stone-800 opacity-60"
-            ></div>
-          ))}
-        </div>
       </div>
     </section>
   );

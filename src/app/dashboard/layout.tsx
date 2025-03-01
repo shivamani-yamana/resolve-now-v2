@@ -11,7 +11,6 @@ import {
   Search,
   HelpCircle,
   LogOut,
-  Bell,
   Menu,
   Settings,
   MessageSquare,
@@ -21,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function DashboardLayout({
   children,
@@ -116,7 +116,7 @@ export default function DashboardLayout({
 
           <div className="flex items-center px-2 mb-10">
             <span className="text-xl font-semibold sm:text-2xl">
-              Grievance Portal
+              Resolve Now
             </span>
           </div>
 
@@ -157,9 +157,7 @@ export default function DashboardLayout({
         <header className="sticky top-0 z-20 flex items-center justify-between h-16 px-4 border-b bg-card">
           <div className="flex-1 ml-8 lg:ml-0" />
           <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
-              <Bell className="w-5 h-5" />
-            </Button>
+            <ThemeToggle />
             <Button variant="ghost" size="icon" onClick={logout}>
               <LogOut className="w-5 h-5" />
             </Button>

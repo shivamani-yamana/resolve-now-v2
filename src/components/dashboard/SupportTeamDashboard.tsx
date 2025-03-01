@@ -296,7 +296,7 @@ export default function SupportTeamDashboard() {
                     variant="secondary"
                     className="flex items-center gap-1"
                   >
-                    "{searchQuery}"
+                    &quot;{searchQuery}&quot;
                     <X
                       className="w-3 h-3 cursor-pointer"
                       onClick={() => setSearchQuery("")}

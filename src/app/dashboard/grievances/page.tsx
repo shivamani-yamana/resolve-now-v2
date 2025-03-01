@@ -33,7 +33,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   Search,
-  Filter,
   MoreHorizontal,
   Eye,
   MessageCircle,
@@ -253,6 +252,7 @@ export default function GrievancesPage() {
       date: now.toISOString().split("T")[0],
     };
 
+    console.log("Submitted Grievamce", submittedGrievance);
     // In a real app, you would add this to your state after API confirmation
     // For this demo, we'll show a success message
 

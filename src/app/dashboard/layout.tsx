@@ -11,7 +11,6 @@ import {
   Search,
   HelpCircle,
   LogOut,
-  Bell,
   Menu,
   Settings,
   MessageSquare,

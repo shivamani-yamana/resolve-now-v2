@@ -1,16 +1,11 @@
-import type { Metadata } from "next";
+import React from "react";
+import { AuthProvider } from "@/providers/AuthProvider";
+
 import { Inter } from "next/font/google";
 import "./globals.css";
-
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Resolve Now",
-  description: "Conflict resolution platform",
-};
 
 export default function RootLayout({
   children,
@@ -19,6 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <title>Resolve Now - Grievance Management System</title>
+        <meta
+          name="description"
+          content="A modern grievance management system to streamline issue resolution"
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
@@ -26,9 +28,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
-        <Toaster />
       </body>
     </html>
   );

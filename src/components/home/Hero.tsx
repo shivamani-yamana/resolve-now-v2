@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Hero() {
   return (
@@ -24,7 +25,10 @@ export default function Hero() {
               </Button>
               <Button size="lg" variant="outline">
                 {/* Add demo video link here */}
-                <Link href="#demo" className="flex items-center">
+                <Link
+                  href="https://youtu.be/MrWB3SiP7qg"
+                  className="flex items-center"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="w-5 h-5 mr-2"
@@ -64,7 +68,14 @@ export default function Hero() {
             <div className="relative z-10 p-2 bg-white shadow-xl rounded-2xl">
               <div className="aspect-[4/3] relative overflow-hidden rounded-xl">
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                  {/* Image Placeholder here */}
+                  <Image
+                    src="/project-demo.png"
+                    alt="Hero"
+                    layout="fill"
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority
+                  />
                 </div>
               </div>
             </div>

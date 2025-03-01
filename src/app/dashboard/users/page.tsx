@@ -107,7 +107,6 @@ export default function UsersPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b bg-muted/50">
-              <th className="px-4 py-3 font-medium text-left">Name</th>
               <th className="px-4 py-3 font-medium text-left">Email</th>
               <th className="px-4 py-3 font-medium text-left">Role</th>
               <th className="px-4 py-3 font-medium text-left">Status</th>
@@ -117,7 +116,6 @@ export default function UsersPage() {
           <tbody>
             {filteredUsers.map((user) => (
               <tr key={user.id} className="border-b hover:bg-muted/50">
-                <td className="px-4 py-3">{user.name}</td>
                 <td className="px-4 py-3">{user.email}</td>
                 <td className="px-4 py-3">
                   <Badge

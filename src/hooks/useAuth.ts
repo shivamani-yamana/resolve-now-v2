@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 type User = {
   id: string;
   name: string;
-  username: string;
+  email: string; // Changed from username to email
   role: "admin" | "support";
   department?: string;  // Category/department the support staff belongs to
   team?: string;
@@ -27,8 +27,8 @@ export function useAuth() {
       setUser({
         id: "user-001",
         name: "Jane Doe",
-        username: "janedoe",
-        role: "admin", // Change to "support" to see the support team dashboard
+        email: "jane.doe@example.com", // Changed from username to email
+        role: "support", // Change to "support" to see the support team dashboard
         department: "IT",
         assignedCategories: ["IT", "Technical Support"]
       });
@@ -38,13 +38,13 @@ export function useAuth() {
         {
           id: "user-001",
           name: "Jane Doe",
-          username: "janedoe",
+          email: "jane.doe@example.com", // Changed from username to email
           role: "admin",
         },
         {
           id: "user-002",
           name: "John Smith",
-          username: "johnsmith",
+          email: "john.smith@example.com", // Changed from username to email
           role: "support",
           department: "IT",
           team: "Technical Support",
@@ -53,7 +53,7 @@ export function useAuth() {
         {
           id: "user-003",
           name: "Sarah Lee",
-          username: "sarahlee",
+          email: "sarah.lee@example.com", // Changed from username to email
           role: "support",
           department: "Administration",
           team: "Academic Affairs",
@@ -65,9 +65,9 @@ export function useAuth() {
     }, 1000);
   }, []);
   
-  const login = (username: string, password: string) => {
+  const login = (email: string, password: string) => {
     // Implementation would call your auth API
-    console.log("Login with", username, password);
+    console.log("Login with", email, password);
   };
   
   const logout = () => {
